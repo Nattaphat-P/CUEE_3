@@ -2,6 +2,7 @@
 #define BLYNK_TEMPLATE_ID "TMPL6TEgwENGm"
 #define BLYNK_TEMPLATE_NAME "Smart Workspace"
 #define BLYNK_AUTH_TOKEN "ใส่tokenตรงนี้นะจ๊ะ"
+//#define BLYNK_PRINT Serial ไว้ก่อน
 
 /******************** LIBRARY ********************/
 #include <WiFi.h>
