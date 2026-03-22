@@ -32,7 +32,7 @@ Data
 
 <img width="968" height="547" alt="image" src="https://github.com/user-attachments/assets/42921296-61e8-4e4c-b07b-d424fdc67a0b" />
 
-<img width="885" height="492" alt="image" src="https://github.com/user-attachments/assets/d9dac76c-09b1-445a-8145-04b66a211fa2" />
+<img width="1047" height="577" alt="image" src="https://github.com/user-attachments/assets/f8efc02f-da89-4fd4-83ec-0966862663e1" />
 
 <img width="975" height="684" alt="image" src="https://github.com/user-attachments/assets/d55cd18c-de69-40b5-8e13-e6e297e15653" />
 
