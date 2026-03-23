@@ -97,8 +97,4 @@ https://cad.onshape.com/documents/c8f79d7ed01564a4cec14bf9/w/396719e0328e4afdfa7
 
 <img width="1047" height="577" alt="image" src="https://github.com/user-attachments/assets/f8efc02f-da89-4fd4-83ec-0966862663e1" />
 
-<img width="975" height="684" alt="image" src="https://github.com/user-attachments/assets/d55cd18c-de69-40b5-8e13-e6e297e15653" />
-
-<img width="1045" height="732" alt="image" src="https://github.com/user-attachments/assets/03889d98-222f-4853-b1a5-55b00c37a7d9" />
-
-<img width="1040" height="727" alt="image" src="https://github.com/user-attachments/assets/5165b20f-7c90-400a-9fd5-f905ad96e695" />
+<img width="947" height="666" alt="image" src="https://github.com/user-attachments/assets/2781b6a8-2520-44b2-9d4a-fb712c8d6956" />
