@@ -8,6 +8,9 @@
 4. ชื่นนภา เก็งวินิจ (พิงค์)
 5. กันตวัฒน์ วงศ์โรจน์ปชากุล (ซิน)
 
+<img src="Asset/Picture1.png" width="100%">
+<img src="Asset/Sponsor.png" width="100%">
+
 ---
 
 ## THEME : (IoT) for Smart Living
