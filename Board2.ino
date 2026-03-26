@@ -1,4 +1,3 @@
-//Credit made by xin only
 #include <ESP8266WiFi.h>
 #include <espnow.h>
 
