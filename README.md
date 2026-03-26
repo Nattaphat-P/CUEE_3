@@ -9,7 +9,7 @@
 5. กันตวัฒน์ วงศ์โรจน์ปชากุล (ซิน)
 
 <img src="Asset/Picture1.png" width="100%">
-<img src="Asset/Sponsor.png" width="100%">
+<img src="Asset/Sponsor1.png" width="100%">
 
 ---
 
