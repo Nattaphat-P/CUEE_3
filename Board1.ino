@@ -167,6 +167,7 @@ void setup() {
   pinMode(LED_ALERT_3, OUTPUT); digitalWrite(LED_ALERT_3, LOW);
   pinMode(BTN,         INPUT_PULLUP);
 
+  // ESP-NOW
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
   if (esp_now_init() != ESP_OK) {
@@ -207,14 +208,13 @@ void loop() {
   /******** SENSOR READ ********/
   alertEye = alertHunch = alertLight = alertWork = false;
 
-  // อ่านระยะห่างใบหน้า
   float eyeDist  = getDistance(TRIG_EYE, ECHO_EYE);
-
+  
   // --- ส่วนแก้ไข TEMT6000 ---
   int lightRaw = analogRead(PIN_LIGHT);
-  float voltage = (lightRaw / 4095.0) * 3.3;                // แปลงค่า ADC เป็นแรงดัน
-  float microAmps = (voltage / 10000.0) * 1000000.0;       // I = V/R (R=10k), แปลงเป็น uA
-  float lux = microAmps * 0.5;                             // สูตร 2 uA = 1 lx (หรือ microAmps / 2.0)
+  float voltage = (lightRaw / 4095.0) * 3.3; 
+  float microAmps = (voltage / 10000.0) * 1000000.0; 
+  float lux = microAmps * 0.5; // อิงตาม 2uA = 1 lux
   // -------------------------
 
   /******** EYE ********/
@@ -258,7 +258,7 @@ void loop() {
     digitalWrite(LED_ALERT_3, LOW);
   }
 
-  /******** LCD DISPLAY (Priority) ********/
+  /******** LCD ********/
   if      (alertEye)   updateLCD("! Too Close!",    "Move back pls");
   else if (alertHunch) updateLCD("! Bad Posture!",  "Sit straight");
   else if (alertWork)  updateLCD("! Take a break!", "1hr work done");
