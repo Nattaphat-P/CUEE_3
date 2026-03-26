@@ -135,7 +135,7 @@ void printDebug(float eyeDist, float lux) {
   Serial.printf("Eye    : %.1f cm\n", eyeDist);
   Serial.printf("BackUp : %.1f cm\n", backData.distUp);
   Serial.printf("BackLow: %.1f cm\n", backData.distLow);
-  Serial.printf("Light  : %.1f\n", lux);
+  Serial.printf("Light  : %.1f lx\n", lux);
   Serial.printf("Sitting: %s\n",  isSitting ? "YES" : "NO");
   Serial.printf("Hunch# : %lu\n", hunchCount);
   Serial.print("Alerts : ");
@@ -146,7 +146,6 @@ void printDebug(float eyeDist, float lux) {
   if (!alertEye && !alertHunch && !alertLight && !alertWork)
     Serial.print("NONE");
   Serial.println("\n====================\n");
-  delay(1000);
 }
 
 /******************** SETUP ********************/
@@ -168,26 +167,14 @@ void setup() {
   pinMode(LED_ALERT_3, OUTPUT); digitalWrite(LED_ALERT_3, LOW);
   pinMode(BTN,         INPUT_PULLUP);
 
-  // ทดสอบ Buzzer
-  Serial.println("Testing buzzer...");
-  beepOnce(1000, 200);
-  delay(100);
-  beepOnce(1000, 200);
-  Serial.println("Buzzer test done");
-
-  // ESP-NOW
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
-  Serial.print("MAC: "); Serial.println(WiFi.macAddress());
-
   if (esp_now_init() != ESP_OK) {
     Serial.println("ESP-NOW FAILED"); return;
   }
   esp_now_register_recv_cb(onDataReceived);
-  Serial.println("ESP-NOW Ready");
 
   updateLCD("System: OFF", "Press BTN");
-  Serial.println("Boot complete.");
 }
 
 /******************** LOOP ********************/
@@ -201,7 +188,6 @@ void loop() {
     delay(50);
     systemActive = !systemActive;
     digitalWrite(LED_SYS, systemActive);
-    Serial.print("System: "); Serial.println(systemActive ? "ON" : "OFF");
 
     if (systemActive) {
       updateLCD("System: ON", "Monitoring...");
@@ -221,9 +207,15 @@ void loop() {
   /******** SENSOR READ ********/
   alertEye = alertHunch = alertLight = alertWork = false;
 
+  // อ่านระยะห่างใบหน้า
   float eyeDist  = getDistance(TRIG_EYE, ECHO_EYE);
-  int   lightRaw = analogRead(PIN_LIGHT);
-  float lux      = (lightRaw / 4095.0) * 3.3 * 1000.0;
+
+  // --- ส่วนแก้ไข TEMT6000 ---
+  int lightRaw = analogRead(PIN_LIGHT);
+  float voltage = (lightRaw / 4095.0) * 3.3;                // แปลงค่า ADC เป็นแรงดัน
+  float microAmps = (voltage / 10000.0) * 1000000.0;       // I = V/R (R=10k), แปลงเป็น uA
+  float lux = microAmps * 0.5;                             // สูตร 2 uA = 1 lx (หรือ microAmps / 2.0)
+  // -------------------------
 
   /******** EYE ********/
   if (eyeDist > 2 && eyeDist < CLOSE_THRESHOLD) {
@@ -234,7 +226,7 @@ void loop() {
     isClose = false;
   }
 
-  /******** POSTURE (รับจาก ESP8266) ********/
+  /******** POSTURE ********/
   if (backData.distLow < 50) {
     if (!isSitting) { sessionStart = millis(); isSitting = true; }
 
@@ -266,7 +258,7 @@ void loop() {
     digitalWrite(LED_ALERT_3, LOW);
   }
 
-  /******** LCD ********/
+  /******** LCD DISPLAY (Priority) ********/
   if      (alertEye)   updateLCD("! Too Close!",    "Move back pls");
   else if (alertHunch) updateLCD("! Bad Posture!",  "Sit straight");
   else if (alertWork)  updateLCD("! Take a break!", "1hr work done");
@@ -284,5 +276,9 @@ void loop() {
   handleBuzzer(currentBeep);
 
   /******** DEBUG ********/
-  printDebug(eyeDist, lux);
+  static unsigned long lastDebug = 0;
+  if (millis() - lastDebug > 1000) {
+    printDebug(eyeDist, lux);
+    lastDebug = millis();
+  }
 }
