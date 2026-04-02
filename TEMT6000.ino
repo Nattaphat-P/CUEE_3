@@ -1,6 +1,6 @@
 /***************************************************
  * TEMT6000 Light Sensor Test (ESP32)
- * มาตรฐานการคำนวณ: 2 uA = 1 lux
+ * มาตรฐานการคำนวณ: 2 uA = 1 lux หมายความว่าถ้า กระแส=10 lux=20
  * https://devices.esphome.io/devices/temt6000/
  * https://github.com/CraftzAdmin/esp32/blob/main/Sensors/TEMT6000/README.md
  * Pin: GPIO 34 (Analog)
