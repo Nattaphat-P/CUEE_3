@@ -27,8 +27,7 @@ void loop() {
   float microAmps = (voltage / 10000.0) * 1000000.0;
   
   // 4. แปลง uA เป็น Lux ตามมาตรฐาน 2 uA = 1 lux
-  // ดังนั้น Lux = uA / 2.0 (หรือ uA * 0.5)
-  float lux = microAmps / 2.0;
+  float lux = microAmps * 2.0;
 
   // แสดงผลออกทาง Serial Monitor
   Serial.print("Raw: ");
